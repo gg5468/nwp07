@@ -1,10 +1,8 @@
 #include "main.h"
 #include "rc.h"
 #include <filesystem>
-#include <iostream>
 
 using namespace Gdiplus;
-using namespace std;
 
 main_window::main_window() {
 	TCHAR file[MAX_PATH] = {};
@@ -28,7 +26,6 @@ void main_window::draw_filename(Gdiplus::Graphics* graphics, RECT rc) {
 	format.SetLineAlignment(Gdiplus::StringAlignmentFar);
 
 	Gdiplus::RectF rcf(rc.left, rc.top, rc.right, rc.bottom);
-	//auto file_name = std::filesystem::path(ofn.lpstrFile).filename();
 
 	graphics->DrawString(file_name.c_str(), -1, &font, rcf, &format, &bb);
 
