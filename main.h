@@ -19,14 +19,10 @@ public:
 
 class main_window : public vsite::nwp::window {
 private:
-	OPENFILENAME ofn;
-
 	std::wstring file_name;
 	std::unique_ptr<Gdiplus::Image> image;
 
 	void draw_filename(Gdiplus::Graphics* graphics, RECT rc);
-public: 
-	main_window();
 protected:
 	void on_paint(HDC hdc) override;
 	void on_command(int id) override;

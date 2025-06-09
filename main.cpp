@@ -4,16 +4,6 @@
 
 using namespace Gdiplus;
 
-main_window::main_window() {
-	TCHAR file[MAX_PATH] = {};
-
-	ofn.lStructSize = sizeof(ofn);
-	ofn.hwndOwner = *this;
-	ofn.lpstrFile = file;
-	ofn.nMaxFile = MAX_PATH;
-	ofn.lpstrFilter = _T("Images\0*.jpg;*.jpeg;*.png;*.bmp;*.gif;*.tif;*.tiff;*.emf\0All files\0*.*\0");
-	ofn.Flags = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
-};
 
 void main_window::draw_filename(Gdiplus::Graphics* graphics, RECT rc) {
 	Gdiplus::Font font(L"Times New Roman", 16);
@@ -53,9 +43,19 @@ void main_window::on_paint(HDC hdc)
 
 void main_window::on_command(int id) 
 {
+	OPENFILENAME ofn = {};
+	TCHAR file[MAX_PATH] = {};
+
 	switch (id) 
 	{
 		case ID_OPEN:
+			ofn.lStructSize = sizeof(ofn);
+			ofn.hwndOwner = *this;
+			ofn.lpstrFile = file;
+			ofn.nMaxFile = MAX_PATH;
+			ofn.lpstrFilter = _T("Images\0*.jpg;*.jpeg;*.png;*.bmp;*.gif;*.tif;*.tiff;*.emf\0All files\0*.*\0");
+			ofn.Flags = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
+
 			if (GetOpenFileName(&ofn)) {
 				image = std::make_unique<Gdiplus::Image>(ofn.lpstrFile);
 				file_name = std::filesystem::path(ofn.lpstrFile).filename();
